@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.props" Condition="Exists('packages\Microsoft.VSSDK.BuildTools.14.2.25123\build\Microsoft.VSSDK.BuildTools.props')" />
   <PropertyGroup>
-    <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -92,7 +92,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>C:\Windows\Microsoft.NET\assembly\GAC_MSIL\Microsoft.VisualStudio.Shell.10.0\v4.0_10.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.Shell.10.0.dll</HintPath>
+      <HintPath>packages\VSSDK.Shell.10.10.0.4\lib\net40\Microsoft.VisualStudio.Shell.10.0.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -116,11 +116,14 @@
       <HintPath>packages\Microsoft.VisualStudio.Shell.Interop.9.0.9.0.30729\lib\Microsoft.VisualStudio.Shell.Interop.9.0.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="VSPackage.resx">
