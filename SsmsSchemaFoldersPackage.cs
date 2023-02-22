@@ -1,4 +1,5 @@
 ﻿extern alias Ssms18;
+extern alias Ssms19;
 extern alias Ssms2012;
 extern alias Ssms2014;
 extern alias Ssms2016;
@@ -130,6 +131,10 @@ namespace SsmsSchemaFolders
 
                switch (ssmsInterfacesVersion.FileMajorPart)
                {
+                  case 16:
+                     debug_message("SsmsVersion:19");
+                     return new Ssms19::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
+
                   case 15:
                      debug_message("SsmsVersion:18");
                      return new Ssms18::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
