@@ -132,6 +132,7 @@ namespace SsmsSchemaFolders
                switch (ssmsInterfacesVersion.FileMajorPart)
                {
                   case 16:
+                  case 19:
                      debug_message("SsmsVersion:19");
                      return new Ssms19::SsmsSchemaFolders.ObjectExplorerExtender(this, Options);
 

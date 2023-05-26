@@ -55,7 +55,7 @@
     <None Include="Key.snk" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SSMS-Schema-Folders-KrnlSoft\SsmsSchemaFolders.Interfaces.csproj">
+    <ProjectReference Include="SsmsSchemaFolders.Interfaces.csproj">
       <Project>{7d308a5e-267f-4ac6-b4ac-d6d94f93bbeb}</Project>
       <Name>SsmsSchemaFolders.Interfaces</Name>
     </ProjectReference>
