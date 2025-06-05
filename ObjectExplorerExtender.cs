@@ -275,7 +275,7 @@ namespace SsmsSchemaFolders
             // First 50 have already been sorted which will affect the count.
             if (node.Nodes.Count < GetFolderLevelMinNodeCount(folderLevel))
                 return 0;
-            
+
             var nodeText = node.Text;
             node.Text += " (sorting...)";
             //node.TreeView.Update();
@@ -584,6 +584,90 @@ namespace SsmsSchemaFolders
             sw.Stop();
 
             return schemas.Count;
+        }
+
+        public int ReorganizeDatabaseNodes(TreeNode node)
+        {
+            debug_message("ReorganizeDatabaseNodes");
+
+            if (node.Nodes.Count <= 1)
+                return 0;
+
+            TreeNode folderNode = null;
+
+            //create node
+            string nodeTag = "OfflineDatabasesFolder";
+            string folderKey = "OfflineDatabases";
+            if (!node.Nodes.ContainsKey(folderKey))
+            {
+                int index = 0;
+                foreach (TreeNode n in node.Nodes)
+                {
+                    string urnPath = GetNodeUrnPath(n);
+                    if (urnPath == "Server/Database")
+                    {
+                        index = node.Nodes.IndexOf(n);
+                        break;
+                    }
+                }
+
+                if (Options.CloneParentNode)
+                {
+                    folderNode = new SchemaFolderTreeNode(node);
+                    node.Nodes.Insert(index, folderNode);
+                }
+                else
+                {
+                    folderNode = node.Nodes.Insert(index, folderKey);
+                }
+
+                folderNode.Name = folderKey;
+                folderNode.Text = "Offline Databases";
+                folderNode.Tag = nodeTag;
+
+                folderNode.ImageIndex = node.ImageIndex;
+                folderNode.SelectedImageIndex = node.ImageIndex;
+            }
+            else
+            {
+                folderNode = node.Nodes[folderKey];
+            }
+
+            //debug_message(DateTime.Now.ToString("ss.fff"));
+
+            node.TreeView.BeginUpdate();
+
+            //can't move nodes while iterating forward over them
+            //create list of nodes to move then perform the update
+            var nodes = new List<TreeNode>();
+
+            foreach (TreeNode childNode in node.Nodes)
+            {
+                string urnPath = GetNodeUrnPath(childNode);
+                if (urnPath != "Server/Database")
+                    continue;
+
+                if (!childNode.Text.EndsWith("(Offline)"))
+                    continue;
+
+                //add node to list
+                nodes.Add(childNode);
+            }
+
+            //debug_message(DateTime.Now.ToString("ss.fff"));
+
+            //move nodes to folder
+            foreach (TreeNode childNode in nodes)
+            {
+                node.Nodes.Remove(childNode);
+                folderNode.Nodes.Add(childNode);
+            }
+
+            node.TreeView.EndUpdate();
+
+            //debug_message(DateTime.Now.ToString("ss.fff"));
+
+            return nodes.Count;
         }
 
         [System.Diagnostics.Conditional("DEBUG")]

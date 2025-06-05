@@ -48,7 +48,7 @@ namespace SsmsSchemaFolders
         public const string SchemaFolderNodeTag = "SchemaFolder";
 
         public SchemaFolderOptions Options { get; set; }
-        
+
         private IObjectExplorerExtender _objectExplorerExtender;
 
         private IVsOutputWindowPane _outputWindowPane = null;
@@ -201,6 +201,15 @@ namespace SsmsSchemaFolders
                                     _objectExplorerExtender.RenameNode(node);
                                 }
                                 break;
+                            case "Server/DatabasesFolder":
+                                {
+                                    var databaseCount = _objectExplorerExtender.ReorganizeDatabaseNodes(node);
+                                    if (expanding && databaseCount == 1)
+                                    {
+                                        node.LastNode.Expand();
+                                    }
+                                }
+                                break;
 
                             default:
                                 // Server/DatabasesFolder
@@ -217,7 +226,7 @@ namespace SsmsSchemaFolders
             {
                 var error = ex.ToString();
                 ActivityLogEntry(__ACTIVITYLOG_ENTRYTYPE.ALE_ERROR, error);
-                MessageBox.Show(error,"SSMS Schema Folders", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(error, "SSMS Schema Folders", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
